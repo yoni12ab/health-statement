@@ -17,23 +17,18 @@ require('dotenv').config();
   await (await page.$('#password')).type(process.env.SMART_SCHOOL_PASS);
   await (await page.$('#loginLogoutButton')).click();
   await page.waitFor(5000);
-  // const elementHandle = await page.$('.innerContent iframe');
-  // const frame = await elementHandle.contentFrame();
-  // for (let i = 0; i < 2; i++) {
-  //   await (await frame.$(`[for*="studentIDs_${i}"] a`)).click();
-  //   await page.waitFor(2000);
-  //   await (await frame.$('[src*="email.gif"]')).click();
-  //   await page.waitFor(2000);
-  // }
+  await (await page.$('.drsMoveHandle')).click({ clickCount: 2 });
+
+  await page.waitFor(5000);
   const elementHandle = await page.$('.drsElement .innerContent iframe');
   const frame = await elementHandle.contentFrame();
   await (await frame.$(`#saveButton`)).click();
   await page.waitFor(2000);
-  // await (await frame.$('[src*="email.gif"]')).click();
-  // await page.waitFor(2000);
-  const subject = 'הצהרת בריאות' + new Date().toDateString();
+
+  const subject = 'הצהרת בריאות סמארט סקול' + new Date().toDateString();
   const message = 'הצהרה נשלחה';
   const base64 = await page.screenshot({ encoding: 'base64' });
-  await sendEmail(subject, message, base64, 'image.jpg');
+
+  await sendEmail(subject, message, base64, 'סמארט סקול');
   await browser.close();
 })();
